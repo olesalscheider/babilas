@@ -1,0 +1,9 @@
+#ifndef BABILAS_CONFIG_HH
+#define BABILAS_CONFIG_HH
+
+#define babilas_VERSION_MAJOR @babilas_VERSION_MAJOR@
+#define babilas_VERSION_MINOR @babilas_VERSION_MINOR@
+
+#define babilas_VERSION_STRING QLatin1String("@babilas_VERSION_MAJOR@.@babilas_VERSION_MINOR@")
+
+#endif // BABILAS_CONFIG_HH

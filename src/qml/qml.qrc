@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>About.qml</file>
+        <file>AccountList.qml</file>
+        <file>AccountDetails.qml</file>
+        <file>Chat.qml</file>
+        <file>ChatInput.qml</file>
+        <file>ChatMessage.qml</file>
+        <file>ContactList.qml</file>
+        <file>EmojiChooser.qml</file>
+        <file>emojis.xml</file>
+    </qresource>
+</RCC>
