@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     app.setApplicationName(Constants::applicationName);
     app.setDesktopFileName(Constants::applicationName);
     app.setApplicationVersion(babilas_VERSION_STRING);
-    app.setWindowIcon(QIcon("qrc:/images/babilas.png"));
+    app.setWindowIcon(QIcon(":/images/babilas.png"));
 
     AccountManager accountmanager;
     QQmlApplicationEngine engine;

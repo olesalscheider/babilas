@@ -22,12 +22,24 @@ import QtQuick.Controls 2.3
 
 import org.kde.kirigami 2.4 as Kirigami
 
-ScrollView {
+Item {
+    property var account
+    anchors.fill: parent
     ListView {
         anchors.fill: parent
-        model: accountmanager.accounts
-        delegate: AccountContactList {
-            account: modelData
+        model: account.client.contactList
+        delegate: Kirigami.BasicListItem {
+            label: name
+            icon: photo
+            reserveSpaceForIcon: true
+            onClicked: {
+                root.visibleContact = modelData.jid
+            }
+        }
+
+        header: Kirigami.BasicListItem {
+            label: account.jid
+            reserveSpaceForIcon: false
         }
     }
 }

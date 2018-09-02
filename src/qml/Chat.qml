@@ -20,13 +20,11 @@
 import QtQuick 2.10
 import QtQuick.Controls 2.3
 
-import org.kde.kirigami 2.4 as Kirigami
-
 ScrollView {
     id: scrollview
     ListView {
         anchors.fill: parent
-        model: ["Hi", "Hihi", "How are you? <font size='5'>😂</font>"]
+        model: root.visibleContact
         delegate: ChatMessage {
             width: scrollview.width
             messageText: modelData

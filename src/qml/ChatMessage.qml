@@ -20,8 +20,6 @@
 import QtQuick 2.10
 import QtQuick.Controls 2.3
 
-import org.kde.kirigami 2.4 as Kirigami
-
 Rectangle {
     property string messageText
 

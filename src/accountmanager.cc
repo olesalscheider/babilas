@@ -26,8 +26,6 @@
 AccountManager::AccountManager(QObject *parent)
     : QObject(parent)
 {
-    m_contactListModel = new ContactListModel(this);
-
     QSettings settings(Constants::organizationName, Constants::applicationName);
     settings.beginGroup(QLatin1String("accounts"));
     for (auto &accountName : settings.childGroups()) {
@@ -40,11 +38,6 @@ AccountManager::AccountManager(QObject *parent)
 QList<QObject *> AccountManager::accounts() const
 {
     return m_accountList;
-}
-
-QObject * AccountManager::contacts() const
-{
-    return m_contactListModel;
 }
 
 void AccountManager::newAccount()

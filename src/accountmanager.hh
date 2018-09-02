@@ -21,7 +21,6 @@
 #define ACCOUNTMANAGER_HH
 
 #include "account.hh"
-#include "contactlistmodel.hh"
 
 #include <QList>
 #include <QSettings>
@@ -31,24 +30,20 @@ class AccountManager : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QList<QObject *> accounts READ accounts NOTIFY accountsChanged)
-    Q_PROPERTY(QObject * contacts READ contacts NOTIFY contactsChanged)
 
 public:
     AccountManager(QObject *parent = nullptr);
 
     QList<QObject *> accounts() const;
-    QObject * contacts() const;
 
     Q_INVOKABLE void newAccount();
     Q_INVOKABLE void deleteAccount(int idx);
 
 signals:
     void accountsChanged();
-    void contactsChanged();
 
 private:
     QList<QObject *> m_accountList;
-    ContactListModel *m_contactListModel;
 };
 
 #endif // ACCOUNTMANAGER_HH

@@ -3,6 +3,7 @@
         <file>main.qml</file>
         <file>About.qml</file>
         <file>AccountList.qml</file>
+        <file>AccountContactList.qml</file>
         <file>AccountDetails.qml</file>
         <file>Chat.qml</file>
         <file>ChatInput.qml</file>

@@ -95,3 +95,8 @@ void Account::setResource(QString resource)
     m_configuration.setResource(resource);
     emit resourceChanged();
 }
+
+QObject * Account::client() const
+{
+    return m_client;
+}

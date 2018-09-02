@@ -24,31 +24,41 @@
 
 #include <QObject>
 #include <QXmppClient.h>
+#include <QXmppMessage.h>
+#include <QXmppVCardIq.h>
+
+#include "contactlistmodel.hh"
 
 class Client : public QObject {
     Q_OBJECT
 
+    Q_PROPERTY(QObject * contactList READ contactList NOTIFY contactListChanged)
+
 public:
-
-    struct Contact {
-        QStringList resources;
-    };
-
     Client(QXmppConfiguration &configuration, QObject *parent = nullptr);
+
+    QObject * contactList() const;
+
+    void sendMessage(QString &jid, QString &message);
+
+signals:
+    void contactListChanged();
 
 private:
     void onLogMessage(QXmppLogger::MessageType type, const QString &text) const;
 
+    void onMessageReceived(const QXmppMessage &message);
     void onRosterReceived();
     void onRosterPresenceChanged(const QString &bareJid, const QString &resource);
     void onRosterItemAdded(const QString &bareJid);
     void onRosterItemChanged(const QString &bareJid);
     void onRosterItemRemoved(const QString &bareJid);
     void onRosterSubscriptionReceived(const QString &bareJid);
+    void onVCardReceived(const QXmppVCardIq &vcard);
 
     QXmppClient m_qxmppClient;
 
-    QMap<QString, Contact> m_contacts;
+    ContactListModel *m_contactList;
 };
 
 #endif // CLIENT_HH

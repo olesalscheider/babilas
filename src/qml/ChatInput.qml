@@ -70,6 +70,7 @@ Item {
                     text: qsTr("Emoji 😀")
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignBottom
+                    onClicked: popup.open()
                 }
 
                 Button {
@@ -85,13 +86,14 @@ Item {
 
     Popup {
         id: popup
-        x: 100
-        y: 100
-        width: 20
-        visible: true
-        height: 30
+        parent: contentLayout
+        x: textArea.x
+        y: textArea.y - 2 * textArea.height
+        width: textArea.width
+        height: 3 * textArea.height
         modal: true
         focus: true
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
     }
 }
