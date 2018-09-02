@@ -23,10 +23,14 @@ set(babilas_SOURCES
     src/accountmanager.hh
     src/client.cc
     src/client.hh
+    src/contact.cc
+    src/contact.hh
     src/constants.cc
     src/constants.hh
     src/contactlistmodel.cc
     src/contactlistmodel.hh
+    src/conversation.cc
+    src/conversation.hh
     src/main.cc
     src/qml/qml.qrc
     img/img.qrc

@@ -24,7 +24,7 @@ ScrollView {
     id: scrollview
     ListView {
         anchors.fill: parent
-        model: root.visibleContact
+        model: root.visibleContact.conversation
         delegate: ChatMessage {
             width: scrollview.width
             messageText: modelData

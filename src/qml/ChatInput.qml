@@ -78,6 +78,10 @@ Item {
                     text: qsTr("Send")
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignBottom
+                    onClicked: {
+                        root.visibleContact.sendMessage(textArea.text)
+                        textArea.text = ""
+                    }
                 }
             }
         }

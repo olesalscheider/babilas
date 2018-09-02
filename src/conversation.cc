@@ -17,29 +17,9 @@
  * along with Babilas. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.10
-import QtQuick.Controls 2.3
+#include "conversation.hh"
 
-import org.kde.kirigami 2.4 as Kirigami
-
-Item {
-    property var account
-    anchors.fill: parent
-    ListView {
-        anchors.fill: parent
-        model: account.client.contactList
-        delegate: Kirigami.BasicListItem {
-            label: modelData.name
-            icon: modelData.photo
-            reserveSpaceForIcon: true
-            onClicked: {
-                root.visibleContact = modelData
-            }
-        }
-
-        header: Kirigami.BasicListItem {
-            label: account.jid
-            reserveSpaceForIcon: false
-        }
-    }
-}
+// Conversation::Conversation(QObject *parent)
+//     : QObject(parent)
+// {
+// }

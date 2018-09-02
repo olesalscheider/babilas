@@ -19,18 +19,17 @@
 
 #include "client.hh"
 
-#include "constants.hh"
-
 #include <QApplication>
 #include <QXmppVersionManager.h>
 #include <QXmppRosterManager.h>
 #include <QXmppVCardManager.h>
 #include <QXmppUtils.h>
 
+#include "constants.hh"
+#include "conversation.hh"
+
 Client::Client(QXmppConfiguration &configuration, QObject *parent) : QObject(parent)
 {
-    m_contactList = new ContactListModel(this);
-
     m_qxmppClient.versionManager().setClientName(qAppName());
     m_qxmppClient.versionManager().setClientVersion(babilas_VERSION_STRING);
     m_qxmppClient.versionManager().setClientOs(QSysInfo::prettyProductName());
@@ -53,6 +52,21 @@ Client::Client(QXmppConfiguration &configuration, QObject *parent) : QObject(par
     connect(&m_qxmppClient.vCardManager(), &QXmppVCardManager::vCardReceived, this, &Client::onVCardReceived);
 
     m_qxmppClient.connectToServer(configuration);
+}
+
+Contact& Client::getContactRef(const QString &jid)
+{
+    auto bareJid = QXmppUtils::jidToBareJid(jid);
+    if (!m_contactMap.contains(bareJid)) {
+        m_contactMap.insert(bareJid, new Contact(bareJid, this));
+        emit contactListChanged();
+    }
+    return *static_cast<Contact *>(m_contactMap[bareJid]);
+}
+
+QList<QObject *> Client::contactList() const
+{
+    return m_contactMap.values();
 }
 
 void Client::onLogMessage(QXmppLogger::MessageType type, const QString &text) const
@@ -85,12 +99,11 @@ void Client::onMessageReceived(const QXmppMessage &message)
         m_qxmppClient.sendPacket(outMessage);
     }
 
-    if (!message.body().isEmpty()) {
-        message.body();
-    }
+    auto &contact = getContactRef(message.from());
+    static_cast<Conversation *>(contact.conversation())->addMessage(message);
 }
 
-void Client::sendMessage(QString &jid, QString &message)
+void Client::sendMessage(const QString &jid, const QString &message)
 {
     QXmppMessage outMessage;
     outMessage.setTo(jid);
@@ -99,12 +112,15 @@ void Client::sendMessage(QString &jid, QString &message)
     outMessage.setMarkable(true);
     outMessage.setBody(message);
     m_qxmppClient.sendPacket(outMessage);
+
+    auto &contact = getContactRef(jid);
+    static_cast<Conversation *>(contact.conversation())->addMessage(outMessage);
 }
 
 void Client::onRosterReceived()
 {
     for (auto jid : m_qxmppClient.rosterManager().getRosterBareJids()) {
-        m_contactList->ensureJid(jid);
+        getContactRef(jid);
         auto rosterEntry = m_qxmppClient.rosterManager().getRosterEntry(jid);
         auto contactPresences = m_qxmppClient.rosterManager().getAllPresencesForBareJid(jid);
         m_qxmppClient.vCardManager().requestVCard(jid);
@@ -114,7 +130,8 @@ void Client::onRosterReceived()
 void Client::onVCardReceived(const QXmppVCardIq &vcard)
 {
     auto jid = QXmppUtils::jidToBareJid(vcard.from());
-    m_contactList->setPhoto(jid, vcard.photo());
+    auto &contact = getContactRef(jid);
+    contact.photoFromData(vcard.photo());
 }
 
 void Client::onRosterPresenceChanged(const QString &bareJid, const QString &resource)
@@ -123,13 +140,13 @@ void Client::onRosterPresenceChanged(const QString &bareJid, const QString &reso
 
 void Client::onRosterItemAdded(const QString &bareJid)
 {
-    m_contactList->ensureJid(bareJid);
+    getContactRef(bareJid);
     auto rosterEntry = m_qxmppClient.rosterManager().getRosterEntry(bareJid);
 }
 
 void Client::onRosterItemChanged(const QString &bareJid)
 {
-    m_contactList->ensureJid(bareJid);
+    getContactRef(bareJid);
     auto rosterEntry = m_qxmppClient.rosterManager().getRosterEntry(bareJid);
 }
 
@@ -139,8 +156,4 @@ void Client::onRosterItemRemoved(const QString &bareJid)
 
 void Client::onRosterSubscriptionReceived(const QString &bareJid)
 {
-}
-
-QObject * Client::contactList() const {
-    return m_contactList;
 }
