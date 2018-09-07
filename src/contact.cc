@@ -64,6 +64,8 @@ void Contact::photoFromData(const QByteArray& data)
 void Contact::sendMessage(const QString& message)
 {
     m_client->sendMessage(m_jid, message);
+
+   // TODO: We have to take resource locking (xep-0296) into account here!
 }
 
 Conversation * Contact::conversation() const

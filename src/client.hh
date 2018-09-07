@@ -26,6 +26,10 @@
 #include <QXmppClient.h>
 #include <QXmppMessage.h>
 #include <QXmppVCardIq.h>
+#include <QXmppCarbonManager.h>
+#include <QXmppMamManager.h>
+#include <QXmppTransferManager.h>
+#include <QXmppDiscoveryManager.h>
 
 //#include "contactlistmodel.hh"
 #include "contact.hh"
@@ -48,8 +52,11 @@ signals:
 private:
     Contact& getContactRef(const QString &jid);
     void rebuildContactList();
+    QString clientType() const;
 
     void onLogMessage(QXmppLogger::MessageType type, const QString &text) const;
+    void onConnected();
+    void onError(QXmppClient::Error error);
 
     void onMessageReceived(const QXmppMessage &message);
     void onRosterReceived();
@@ -59,10 +66,22 @@ private:
     void onRosterItemRemoved(const QString &bareJid);
     void onRosterSubscriptionReceived(const QString &bareJid);
     void onVCardReceived(const QXmppVCardIq &vcard);
+    void onClientVCardReceived();
+    void onDiscoveryInfoReceived(const QXmppDiscoveryIq &iq);
+    void onDiscoveryItemsReceived(const QXmppDiscoveryIq &iq);
+    void onArchiveMessageReceived(const QString &id, const QXmppMessage &message);
+    void onArchiveResultsReceived(const QString &id, const QXmppResultSetReply &resultSetReply, bool complete);
 
     QXmppClient m_qxmppClient;
+    QXmppCarbonManager *m_carbonManager;
+    QXmppMamManager *m_mamManager;
+    QXmppTransferManager *m_transferManager;
+    QXmppDiscoveryManager *m_discoveryManager;
+
+    bool m_mamAvailable;
 
     QMap<QString, QObject *> m_contactMap;
+    QStringList m_serverEntities;
 };
 
 #endif // CLIENT_HH

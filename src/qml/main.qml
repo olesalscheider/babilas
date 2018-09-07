@@ -76,6 +76,10 @@ ApplicationWindow {
         }
 
         ColumnLayout {
+            ContactHeader {
+                visible: true
+            }
+
             Chat {
                 id: chat
                 visible: true

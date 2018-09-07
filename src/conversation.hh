@@ -32,55 +32,30 @@ struct Message {
     QString body;
 };
 
+class Contact;
+
 class Conversation : public QAbstractListModel {
     Q_OBJECT
 
 public:
-    enum ContactRoles {
+    enum ConversationRoles {
         BodyRole = Qt::UserRole + 1,
+        StampRole,
+        OutgoingRole,
+        FromJidRole
     };
 
-    Conversation(QObject *parent = nullptr) : QAbstractListModel(parent) {
-    }
+    Conversation(Contact *contact);
 
-    int rowCount(const QModelIndex & = QModelIndex()) const {
-        return m_messages.count();
-    }
+    int rowCount(const QModelIndex & = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role) const;
+    QHash<int, QByteArray> roleNames() const;
 
-    QVariant data(const QModelIndex &index, int role) const {
-        switch (role) {
-        case BodyRole:
-            return m_messages[index.row()].body;
-        default:
-            qCCritical(DebugCategories::general) << "Unknown conversation role " << role;
-            return QVariant();
-        }
-    }
-
-    QHash<int, QByteArray> roleNames() const {
-        QHash<int, QByteArray> roles;
-        roles[BodyRole] = "body";
-        return roles;
-    }
-
-    void addMessage(const QXmppMessage &qxmppMessage)
-    {
-        if (!qxmppMessage.body().isEmpty()) {
-            qxmppMessage.body();
-            Message message;
-            message.body = qxmppMessage.body();
-            message.stamp = qxmppMessage.stamp();
-            message.from = qxmppMessage.from();
-            message.to = qxmppMessage.to();
-
-            beginInsertRows(QModelIndex(), m_messages.count(), m_messages.count());
-            m_messages.append(message);
-            endInsertRows();
-        }
-    }
+    void addMessage(const QXmppMessage &qxmppMessage);
 
 private:
     QList<Message> m_messages;
+    Contact *m_contact;
 };
 
 #endif // CONVERSATION_HH

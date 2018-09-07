@@ -19,22 +19,26 @@
 
 import QtQuick 2.10
 import QtQuick.Controls 2.3
+import QtQuick.Layouts 1.1
 
-ScrollView {
-    id: scrollview
-    Rectangle {
-        anchors.fill: parent
-        color: "white"
-        ListView {
-            anchors.fill: parent
-            model: root.visibleContact.conversation
-            delegate: ChatMessage {
-                width: scrollview.width
-                messageBody: body
-                messageFrom: fromJid
-                messageStamp: stamp
-                messageOutgoing: outgoing
-            }
+import org.kde.kirigami 2.4 as Kirigami
+
+Item {
+    width: parent.width
+    height: 50 //childRect.contentHeight
+    RowLayout {
+        height: 50 //childRect.contentHeight
+        Image {
+            //image: root.visibleContact.photo
+            width: 64
+            height: 64
+            fillMode: Image.PreserveAspectFit
+        }
+        Text {
+            text: root.visibleContact.name
+        }
+        Text {
+            text: "(" + root.visibleContact.jid + ")"
         }
     }
 }
