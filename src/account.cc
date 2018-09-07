@@ -23,8 +23,7 @@
 
 #include <QSettings>
 
-Account::Account(QUuid uuid, QObject *parent)
-    : QObject(parent), m_uuid(uuid), m_deleteAccount(false)
+Account::Account(QUuid uuid, QObject *parent) : QObject(parent), m_uuid(uuid), m_deleteAccount(false)
 {
     m_uuidString = m_uuid.toString().replace("{", "").replace("}", "");
 
@@ -96,7 +95,7 @@ void Account::setResource(QString resource)
     emit resourceChanged();
 }
 
-QObject * Account::client() const
+QObject *Account::client() const
 {
     return m_client;
 }

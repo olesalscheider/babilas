@@ -20,13 +20,13 @@
 #include "constants.hh"
 
 namespace Constants {
-    const QLatin1String applicationName("Babilas");
-    const QLatin1String organizationName("Babilas");
-}
+const QLatin1String applicationName("Babilas");
+const QLatin1String organizationName("Babilas");
+} // namespace Constants
 
 namespace DebugCategories {
-    Q_LOGGING_CATEGORY(qxmppGeneric, "qxmpp.generic")
-    Q_LOGGING_CATEGORY(qxmppStanza, "qxmpp.stanza")
-    Q_LOGGING_CATEGORY(general, "babilas.general")
-    Q_LOGGING_CATEGORY(tracing, "babilas.tracing")
-}
+Q_LOGGING_CATEGORY(qxmppGeneric, "qxmpp.generic")
+Q_LOGGING_CATEGORY(qxmppStanza, "qxmpp.stanza")
+Q_LOGGING_CATEGORY(general, "babilas.general")
+Q_LOGGING_CATEGORY(tracing, "babilas.tracing")
+} // namespace DebugCategories

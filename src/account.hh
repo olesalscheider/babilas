@@ -34,7 +34,7 @@ class Account : public QObject
     Q_PROPERTY(QString jid READ jid WRITE setJid NOTIFY jidChanged)
     Q_PROPERTY(QString password READ password WRITE setPassword NOTIFY passwordChanged)
     Q_PROPERTY(QString resource READ resource WRITE setResource NOTIFY resourceChanged)
-    Q_PROPERTY(QObject * client READ client NOTIFY clientChanged)
+    Q_PROPERTY(QObject *client READ client NOTIFY clientChanged)
 
 public:
     Account(QUuid uuid, QObject *parent = nullptr);
@@ -51,7 +51,7 @@ public:
     QString resource() const;
     void setResource(QString resource);
 
-    QObject * client() const;
+    QObject *client() const;
 
 signals:
     void jidChanged();
@@ -63,7 +63,7 @@ private:
     QUuid m_uuid;
     QString m_uuidString;
     QXmppConfiguration m_configuration;
-    Client* m_client;
+    Client *m_client;
     bool m_deleteAccount;
 };
 

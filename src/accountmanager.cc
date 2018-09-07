@@ -23,8 +23,7 @@
 
 #include <QUuid>
 
-AccountManager::AccountManager(QObject *parent)
-    : QObject(parent)
+AccountManager::AccountManager(QObject *parent) : QObject(parent)
 {
     QSettings settings(Constants::organizationName, Constants::applicationName);
     settings.beginGroup(QLatin1String("accounts"));

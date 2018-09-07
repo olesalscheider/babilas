@@ -23,18 +23,19 @@
 #include <memory>
 
 #include <QObject>
-#include <QXmppClient.h>
-#include <QXmppMessage.h>
-#include <QXmppVCardIq.h>
 #include <QXmppCarbonManager.h>
-#include <QXmppMamManager.h>
-#include <QXmppTransferManager.h>
+#include <QXmppClient.h>
 #include <QXmppDiscoveryManager.h>
+#include <QXmppMamManager.h>
+#include <QXmppMessage.h>
+#include <QXmppTransferManager.h>
+#include <QXmppVCardIq.h>
 
 //#include "contactlistmodel.hh"
 #include "contact.hh"
 
-class Client : public QObject {
+class Client : public QObject
+{
     Q_OBJECT
 
     Q_PROPERTY(QList<QObject *> contactList READ contactList NOTIFY contactListChanged)
@@ -50,7 +51,7 @@ signals:
     void contactListChanged();
 
 private:
-    Contact& getContactRef(const QString &jid);
+    Contact &getContactRef(const QString &jid);
     void rebuildContactList();
     QString clientType() const;
 

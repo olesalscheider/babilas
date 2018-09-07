@@ -20,9 +20,9 @@
 #ifndef CONTACT_HH
 #define CONTACT_HH
 
+#include <QImage>
 #include <QObject>
 #include <QString>
-#include <QImage>
 
 #include "conversation.hh"
 
@@ -35,7 +35,7 @@ class Contact : public QObject
     Q_PROPERTY(QString jid READ jid)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QImage photo READ photo NOTIFY photoChanged)
-    Q_PROPERTY(Conversation * conversation READ conversation)
+    Q_PROPERTY(Conversation *conversation READ conversation)
 
 public:
     Contact(const QString &jid, Client *parent);
@@ -47,7 +47,7 @@ public:
     QImage photo() const;
     void photoFromData(const QByteArray &data);
 
-    Conversation * conversation() const;
+    Conversation *conversation() const;
     Q_INVOKABLE void sendMessage(const QString &message);
 
 signals:

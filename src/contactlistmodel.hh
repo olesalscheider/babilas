@@ -25,19 +25,23 @@
 
 #include "constants.hh"
 
-class ContactListModel : public QAbstractListModel {
+class ContactListModel : public QAbstractListModel
+{
     Q_OBJECT
 
 public:
-    enum ContactRoles {
+    enum ContactRoles
+    {
         JidRole = Qt::UserRole + 1,
         NameRole,
         PhotoRole,
         ConversationRole,
     };
 
-    struct Contact {
-        Contact() {
+    struct Contact
+    {
+        Contact()
+        {
             photo.load(":/images/default_contact_photo.png");
         }
         QString jid;
@@ -46,15 +50,18 @@ public:
         QImage photo;
     };
 
-    ContactListModel(QObject *parent = nullptr) : QAbstractListModel(parent) {
+    ContactListModel(QObject *parent = nullptr) : QAbstractListModel(parent)
+    {
         m_conversations.append("Hihihi");
     }
 
-    int rowCount(const QModelIndex & = QModelIndex()) const {
+    int rowCount(const QModelIndex & = QModelIndex()) const
+    {
         return m_jids.count();
     }
 
-    QVariant data(const QModelIndex &index, int role) const {
+    QVariant data(const QModelIndex &index, int role) const
+    {
         auto jid = m_jids[index.row()];
         switch (role) {
         case JidRole:
@@ -71,7 +78,8 @@ public:
         }
     }
 
-    QHash<int, QByteArray> roleNames() const {
+    QHash<int, QByteArray> roleNames() const
+    {
         QHash<int, QByteArray> roles;
         roles[JidRole] = "jid";
         roles[NameRole] = "name";
@@ -80,7 +88,8 @@ public:
         return roles;
     }
 
-    void ensureJid(const QString &jid) {
+    void ensureJid(const QString &jid)
+    {
         if (!m_jids.contains(jid)) {
             beginInsertRows(QModelIndex(), m_jids.count(), m_jids.count());
             m_jids.append(jid);
@@ -90,15 +99,17 @@ public:
         }
     }
 
-    void setName(const QString &jid, const QString &name) {
+    void setName(const QString &jid, const QString &name)
+    {
         m_contactDetails[jid].name = name;
         QModelIndex idx = createIndex(m_jids.indexOf(jid), 0);
         emit dataChanged(idx, idx);
     }
 
-    void setPhoto(const QString &jid, const QByteArray &data) {
+    void setPhoto(const QString &jid, const QByteArray &data)
+    {
         if (!m_contactDetails[jid].photo.loadFromData(data)) {
-             m_contactDetails[jid].photo.load(":/images/default_contact_photo.png");
+            m_contactDetails[jid].photo.load(":/images/default_contact_photo.png");
         }
         QModelIndex idx = createIndex(m_jids.indexOf(jid), 0);
         emit dataChanged(idx, idx);

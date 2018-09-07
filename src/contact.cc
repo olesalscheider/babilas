@@ -20,8 +20,7 @@
 #include "contact.hh"
 #include "client.hh"
 
-Contact::Contact(const QString &jid, Client *parent)
-    : QObject(parent), m_client(parent), m_jid(jid)
+Contact::Contact(const QString &jid, Client *parent) : QObject(parent), m_client(parent), m_jid(jid)
 {
     m_conversation = new Conversation(this);
     m_name = m_jid;
@@ -38,7 +37,7 @@ QString Contact::name() const
     return m_name;
 }
 
-void Contact::setName(const QString& name)
+void Contact::setName(const QString &name)
 {
     if (m_name.isEmpty()) {
         m_name = m_jid;
@@ -53,7 +52,7 @@ QImage Contact::photo() const
     return m_photo;
 }
 
-void Contact::photoFromData(const QByteArray& data)
+void Contact::photoFromData(const QByteArray &data)
 {
     if (!m_photo.loadFromData(data)) {
         m_photo.load(":/images/default_contact_photo.png");
@@ -61,14 +60,14 @@ void Contact::photoFromData(const QByteArray& data)
     emit photoChanged();
 }
 
-void Contact::sendMessage(const QString& message)
+void Contact::sendMessage(const QString &message)
 {
     m_client->sendMessage(m_jid, message);
 
-   // TODO: We have to take resource locking (xep-0296) into account here!
+    // TODO: We have to take resource locking (xep-0296) into account here!
 }
 
-Conversation * Contact::conversation() const
+Conversation *Contact::conversation() const
 {
     return m_conversation;
 }

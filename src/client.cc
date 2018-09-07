@@ -22,16 +22,15 @@
 #include <QApplication>
 #include <QDBusInterface>
 #include <QUuid>
-#include <QXmppVersionManager.h>
 #include <QXmppRosterManager.h>
-#include <QXmppVCardManager.h>
 #include <QXmppUtils.h>
+#include <QXmppVCardManager.h>
+#include <QXmppVersionManager.h>
 
 #include "constants.hh"
 #include "conversation.hh"
 
-Client::Client(QXmppConfiguration &configuration, QObject *parent)
-    : QObject(parent), m_mamAvailable(false)
+Client::Client(QXmppConfiguration &configuration, QObject *parent) : QObject(parent), m_mamAvailable(false)
 {
     m_qxmppClient.versionManager().setClientName(qAppName());
     m_qxmppClient.versionManager().setClientVersion(babilas_VERSION_STRING);
@@ -79,7 +78,7 @@ Client::Client(QXmppConfiguration &configuration, QObject *parent)
     m_qxmppClient.connectToServer(configuration);
 }
 
-Contact& Client::getContactRef(const QString &jid)
+Contact &Client::getContactRef(const QString &jid)
 {
     auto bareJid = QXmppUtils::jidToBareJid(jid);
     if (!m_contactMap.contains(bareJid)) {
@@ -100,10 +99,8 @@ QString Client::clientType() const
      * dbus interface and assume "pc" if that fails. It would be great if
      * QSysInfo would provide this functionality. */
     QString clientType = QLatin1String("pc");
-    QDBusInterface hostnameInterface(QStringLiteral("org.freedesktop.hostname1"),
-                                     QStringLiteral("/org/freedesktop/hostname1"),
-                                     QStringLiteral("org.freedesktop.hostname1"),
-                                     QDBusConnection::systemBus());
+    QDBusInterface hostnameInterface(QStringLiteral("org.freedesktop.hostname1"), QStringLiteral("/org/freedesktop/hostname1"),
+        QStringLiteral("org.freedesktop.hostname1"), QDBusConnection::systemBus());
     QVariant chassisReply = hostnameInterface.property("Chassis");
     if (chassisReply.isValid()) {
         auto chassisType = chassisReply.toString();
@@ -155,7 +152,7 @@ void Client::onDiscoveryInfoReceived(const QXmppDiscoveryIq &iq)
         if (identity.category() == QLatin1String("client")) {
             m_contactsFeatures[iq.from()] = iq.features();
             m_clientTypes[iq.from()] = identity.type();
-        } else 
+        } else
 #endif
         if (identity.category() == QLatin1String("proxy")) {
             if (identity.type() == QLatin1String("bytestreams") && m_serverEntities.contains(iq.from())) {
@@ -198,7 +195,7 @@ void Client::onDiscoveryItemsReceived(const QXmppDiscoveryIq &iq)
 
 void Client::onLogMessage(QXmppLogger::MessageType type, const QString &text) const
 {
-    switch(type) {
+    switch (type) {
     case QXmppLogger::ReceivedMessage:
     case QXmppLogger::SentMessage:
         qCDebug(DebugCategories::qxmppStanza) << text;
@@ -223,7 +220,7 @@ void Client::onMessageReceived(const QXmppMessage &message)
             outMessage.setMarker(QXmppMessage::Received);
             outMessage.setMarkerId(message.id());
         }
-        if (message.isReceiptRequested()) { 
+        if (message.isReceiptRequested()) {
             outMessage.setReceiptId(message.receiptId());
         }
         outMessage.setStamp(QDateTime::currentDateTimeUtc());
@@ -321,7 +318,8 @@ void Client::onArchiveResultsReceived(const QString &id, const QXmppResultSetRep
     query.setAfter(resultSetReply.last());
     if (!complete) {
         // TODO Take the first parameters from running request list using the id
-        m_mamManager->retrieveArchivedMessages(QString(), QString(), QStringLiteral("test@salscheider-online.de"), QDateTime(), QDateTime(), query);
+        m_mamManager->retrieveArchivedMessages(
+            QString(), QString(), QStringLiteral("test@salscheider-online.de"), QDateTime(), QDateTime(), query);
     } else {
         // TODO remove request from running request list
     }

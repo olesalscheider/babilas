@@ -25,7 +25,8 @@
 
 #include "constants.hh"
 
-struct Message {
+struct Message
+{
     QDateTime stamp;
     QString from;
     QString to;
@@ -34,11 +35,13 @@ struct Message {
 
 class Contact;
 
-class Conversation : public QAbstractListModel {
+class Conversation : public QAbstractListModel
+{
     Q_OBJECT
 
 public:
-    enum ConversationRoles {
+    enum ConversationRoles
+    {
         BodyRole = Qt::UserRole + 1,
         StampRole,
         OutgoingRole,

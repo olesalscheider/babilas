@@ -26,15 +26,15 @@
 #include <QLoggingCategory>
 
 namespace Constants {
-    extern const QLatin1String applicationName;
-    extern const QLatin1String organizationName;
-}
+extern const QLatin1String applicationName;
+extern const QLatin1String organizationName;
+} // namespace Constants
 
 namespace DebugCategories {
-    Q_DECLARE_LOGGING_CATEGORY(qxmppGeneric)
-    Q_DECLARE_LOGGING_CATEGORY(qxmppStanza)
-    Q_DECLARE_LOGGING_CATEGORY(general)
-    Q_DECLARE_LOGGING_CATEGORY(tracing)
-}
+Q_DECLARE_LOGGING_CATEGORY(qxmppGeneric)
+Q_DECLARE_LOGGING_CATEGORY(qxmppStanza)
+Q_DECLARE_LOGGING_CATEGORY(general)
+Q_DECLARE_LOGGING_CATEGORY(tracing)
+} // namespace DebugCategories
 
 #endif // CONSTANTS_HH

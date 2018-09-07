@@ -23,8 +23,7 @@
 
 #include "contact.hh"
 
-Conversation::Conversation(Contact *contact)
-    : QAbstractListModel(contact), m_contact(contact)
+Conversation::Conversation(Contact *contact) : QAbstractListModel(contact), m_contact(contact)
 {
 }
 
