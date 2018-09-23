@@ -18,16 +18,57 @@
  */
 
 import QtQuick 2.10
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.3
+import org.kde.kirigami 2.4 as Kirigami
 
 import Qt.labs.platform 1.0 as Qp
 
-ApplicationWindow {
+Kirigami.ApplicationWindow {
     id: root
-    visible: true
 
     property var visibleContact
+
+    ContactList {
+        id: contactList
+    }
+
+    Chat {
+        id: chat
+    }
+
+    AccountList {
+        id: accountList
+    }
+
+    About {
+        id: about
+    }
+
+    pageStack.initialPage: [contactList, chat]
+
+    menuBar: MenuBar {
+        Menu {
+            title: qsTr("&File")
+            Action {
+                text: qsTr("&Account settings…")
+                onTriggered: { accountList.visible = true }
+            }
+            MenuSeparator {}
+            Action {
+                text: qsTr("&Quit")
+                shortcut: StandardKey.Quit
+                onTriggered: Qt.quit()
+            }
+        }
+        Menu {
+            title: qsTr("&Help")
+            Action {
+                text: qsTr("&About")
+                onTriggered: { about.visible = true }
+            }
+        }
+    }
 
     Qp.SystemTrayIcon {
         id: systray
@@ -49,70 +90,6 @@ ApplicationWindow {
             Qp.MenuItem {
                 text: qsTr("Quit")
                 onTriggered: Qt.quit()
-            }
-        }
-    }
-
-    AccountList {
-        id: accountList
-    }
-
-    About {
-        id: about
-    }
-
-    width: mainLayout.implicitWidth
-    height: mainLayout.implicitHeight
-
-    RowLayout {
-        id: mainLayout
-        anchors.fill: parent
-
-        ContactList {
-            id: contactList
-            visible: true
-            Layout.preferredWidth: 300
-            Layout.fillHeight: true
-        }
-
-        ColumnLayout {
-            ContactHeader {
-                visible: true
-            }
-
-            Chat {
-                id: chat
-                visible: true
-                Layout.preferredWidth: 500
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-            }
-
-            ChatInput {
-                visible: true
-            }
-        }
-    }
-
-    menuBar: MenuBar {
-        Menu {
-            title: qsTr("&File")
-            Action {
-                text: qsTr("&Account settings…")
-                onTriggered: { accountList.visible = true }
-            }
-            MenuSeparator {}
-            Action {
-                text: qsTr("&Quit")
-                shortcut: StandardKey.Quit
-                onTriggered: Qt.quit()
-            }
-        }
-        Menu {
-            title: qsTr("&Help")
-            Action {
-                text: qsTr("&About")
-                onTriggered: {about.visible = true }
             }
         }
     }

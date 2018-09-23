@@ -17,21 +17,27 @@
  * along with Babilas. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import QtQuick.Layouts 1.3
-import org.kde.kirigami 2.4 as Kirigami
+#ifndef PHOTOPROVIDER_HH
+#define PHOTOPROVIDER_HH
 
-Kirigami.Page {
-    title: qsTr("Chat")
+#include <QQuickImageProvider>
+#include <memory>
 
-    ColumnLayout {
-        anchors.fill: parent
-        spacing: Kirigami.Units.largeSpacing
+class PhotoProvider : public QQuickImageProvider
+{
+public:
+    static PhotoProvider *instance();
+    static QString prefix();
+    static QString imageUrl(QString &id);
+    QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize) override;
+    void addImage(QString &id, QImage &image);
+    void removeImage(QString &id);
 
-        ContactHeader {
-        }
-        ChatMessages {
-        }
-        ChatInput {
-        }
-    }
-}
+private:
+    PhotoProvider();
+
+    static PhotoProvider *m_instance;
+    QMap<QString, QImage> m_images;
+};
+
+#endif // PHOTOPROVIDER_HH

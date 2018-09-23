@@ -8,6 +8,7 @@
         <file>Chat.qml</file>
         <file>ChatInput.qml</file>
         <file>ChatMessage.qml</file>
+        <file>ChatMessages.qml</file>
         <file>ContactHeader.qml</file>
         <file>ContactList.qml</file>
         <file>EmojiChooser.qml</file>

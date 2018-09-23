@@ -20,77 +20,59 @@
 import QtQuick 2.10
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.3
+import org.kde.kirigami 2.4 as Kirigami
 
-Item {
-    Layout.fillWidth: true
-    Layout.preferredHeight: Math.max(buttons.Layout.preferredHeight, textArea.Layout.preferredHeight) + 2 * contentLayout.spacing
-    Layout.minimumHeight: Math.max(buttons.Layout.preferredHeight, textArea.Layout.preferredHeight) + 2 * contentLayout.spacing
+RowLayout {
+    Layout.fillHeight: false
 
-    RowLayout {
-        id: contentLayout
-        anchors.fill: parent
+    TextArea {
+        id: textArea
+        Layout.fillWidth: true
+        Layout.minimumHeight: buttons.height
 
-        TextArea {
-            id: textArea
+        placeholderText: qsTr("Enter text…")
+        wrapMode: TextEdit.Wrap
 
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.preferredHeight: contentHeight
-
-            placeholderText: qsTr("Enter text…")
-            wrapMode: TextEdit.Wrap
-
-            Keys.onPressed: {
-                if (event.key === Qt.Key_Return) {
-                    if (!(event.modifiers & Qt.ShiftModifier)) {
-                        sendButton.clicked()
-                        event.accepted = true;
-                    }
-                }
-            }
-        }
-
-        Item {
-            id: buttons
-
-            Layout.fillHeight: true
-            Layout.preferredWidth: childrenRect.width
-            Layout.minimumWidth: childrenRect.width
-            Layout.preferredHeight: childrenRect.height
-            Layout.minimumHeight: childrenRect.height
-
-            ColumnLayout {
-                Item {
-                    // spacer item
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                }
-
-                Button {
-                    text: qsTr("Emoji 😀")
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignBottom
-                    onClicked: popup.open()
-                }
-
-                Button {
-                    id: sendButton
-                    text: qsTr("Send")
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignBottom
-                    onClicked: {
-                        root.visibleContact.sendMessage(textArea.text)
-                        textArea.text = ""
-                    }
+        Keys.onPressed: {
+            if (event.key === Qt.Key_Return) {
+                if (!(event.modifiers & Qt.ShiftModifier)) {
+                    sendButton.clicked()
+                    event.accepted = true;
                 }
             }
         }
     }
 
+    Item {
+        id: buttons
+
+        Layout.alignment: Qt.AlignBottom
+        width: childrenRect.width
+        height: childrenRect.height
+
+        ColumnLayout {
+            Button {
+                text: qsTr("Emoji 😀")
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignBottom
+                onClicked: popup.open()
+            }
+
+            Button {
+                id: sendButton
+                text: qsTr("Send")
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignBottom
+                onClicked: {
+                    root.visibleContact.sendMessage(textArea.text)
+                    textArea.text = ""
+                }
+            }
+        }
+    }
 
     Popup {
         id: popup
-        parent: contentLayout
         x: textArea.x
         y: textArea.y - 2 * textArea.height
         width: textArea.width
@@ -98,6 +80,5 @@ Item {
         modal: true
         focus: true
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
-
     }
 }

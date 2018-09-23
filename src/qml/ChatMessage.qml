@@ -20,6 +20,7 @@
 import QtQuick 2.10
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.1
+import org.kde.kirigami 2.4 as Kirigami
 
 Item {
     property string messageBody
@@ -27,44 +28,51 @@ Item {
     property date messageStamp
     property bool messageOutgoing
 
-    height: childrenRect.height + 10
     width: parent.width
+    height: outerLayout.implicitHeight
+    RowLayout {
+        id: outerLayout
+        anchors.fill: parent
 
-    Rectangle {
-        color: outgoing ? "#ddddff" : "#ddffdd"
-        width: parent.width - 50
-        height: childrenRect.height
-        anchors.left: outgoing ? null : parent.left
-        anchors.right: outgoing ? parent.right : null
-        anchors.top: parent.top
-        anchors.margins: 10
-        radius: 5
-        ColumnLayout {
-            anchors.centerIn: parent
-            width: parent.width - 10
-            RowLayout {
-                width: parent.width
-                Text {
-                    text: messageFrom
-                    font.pointSize: 8
-                    color: "#444444"
+        Item {
+            Layout.preferredWidth: outgoing ? 3 * Kirigami.Units.largeSpacing : 0
+        }
+        Rectangle {
+            color: outgoing ? "#ddddff" : "#ddffdd"
+            Layout.fillWidth: true
+            Layout.minimumWidth: innerLayout.implicitWidth + 0.5 * Kirigami.Units.gridUnit
+            Layout.preferredHeight: innerLayout.implicitHeight + 0.5 * Kirigami.Units.gridUnit
+            radius: 0.5 * Kirigami.Units.gridUnit
+            ColumnLayout {
+                id: innerLayout
+                anchors.fill: parent
+                anchors.margins: 0.25 * Kirigami.Units.gridUnit
+                RowLayout {
+                    Text {
+                        text: messageFrom
+                        font.pointSize: Kirigami.Units.fontMetrics.font.pointSize * 0.8
+                        color: "#444444"
+                    }
+                    Item {
+                        Layout.fillWidth: true
+                    }
+                    Text {
+                        text: "✔✔⏳"
+                        font.pointSize: Kirigami.Units.fontMetrics.font.pointSize * 0.8
+                    }
+                    Text {
+                        text: stamp.toLocaleTimeString()
+                        font.pointSize: Kirigami.Units.fontMetrics.font.pointSize * 0.8
+                        color: "#444444"
+                    }
                 }
-                Item {
-                    Layout.fillWidth: true
-                }
                 Text {
-                    text: "✔✔⏳"
-                    font.pointSize: 8
-                }
-                Text {
-                    text: stamp.toLocaleTimeString()
-                    font.pointSize: 8
-                    color: "#444444"
+                    text: messageBody
                 }
             }
-            Text {
-                text: messageBody
-            }
+        }
+        Item {
+            Layout.preferredWidth: outgoing ? 0 : 3 * Kirigami.Units.largeSpacing
         }
     }
 }

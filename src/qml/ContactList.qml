@@ -22,7 +22,9 @@ import QtQuick.Controls 2.3
 
 import org.kde.kirigami 2.4 as Kirigami
 
-ScrollView {
+Kirigami.ScrollablePage {
+    title: qsTr("Contact list")
+
     ListView {
         anchors.fill: parent
         model: accountmanager.accounts

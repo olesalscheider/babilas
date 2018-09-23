@@ -20,25 +20,22 @@
 import QtQuick 2.10
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.1
-
 import org.kde.kirigami 2.4 as Kirigami
 
-Item {
-    width: parent.width
-    height: 80 //childRect.contentHeight
-    RowLayout {
-        height: 80 //childRect.contentHeight
-        Image {
-            source: root.visibleContact.photo
-            width: 72
-            height: 72
-            fillMode: Image.PreserveAspectFit
-        }
+RowLayout {
+    Layout.fillHeight: false
+    Image {
+        source: root.visibleContact.photo
+        Layout.preferredWidth: 4 * Kirigami.Units.gridUnit
+        Layout.preferredHeight: 4 * Kirigami.Units.gridUnit
+        fillMode: Image.PreserveAspectFit
+    }
+    ColumnLayout {
         Text {
             text: root.visibleContact.name
         }
         Text {
-            text: "(" + root.visibleContact.jid + ")"
+            text: "<" + root.visibleContact.jid + ">"
         }
     }
 }

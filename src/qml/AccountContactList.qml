@@ -30,7 +30,7 @@ Item {
         model: account.client.contactList
         delegate: Kirigami.BasicListItem {
             label: modelData.name
-            icon: Image { source: modelData.photo }
+            icon: modelData.photo
             reserveSpaceForIcon: true
             onClicked: {
                 root.visibleContact = modelData

@@ -17,21 +17,28 @@
  * along with Babilas. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import QtQuick.Layouts 1.3
+import QtQuick 2.10
+import QtQuick.Controls 2.3
+import QtQuick.Layouts 1.1
 import org.kde.kirigami 2.4 as Kirigami
 
-Kirigami.Page {
-    title: qsTr("Chat")
+Rectangle {
+    Layout.fillWidth: true
+    Layout.fillHeight: true
+    color: "white"
 
-    ColumnLayout {
+    ScrollView {
         anchors.fill: parent
-        spacing: Kirigami.Units.largeSpacing
-
-        ContactHeader {
-        }
-        ChatMessages {
-        }
-        ChatInput {
+        anchors.margins: Kirigami.Units.largeSpacing
+        ListView {
+            spacing: Kirigami.Units.smallSpacing
+            model: root.visibleContact.conversation
+            delegate: ChatMessage {
+                messageBody: body
+                messageFrom: fromJid
+                messageStamp: stamp
+                messageOutgoing: outgoing
+            }
         }
     }
 }
