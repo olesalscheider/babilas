@@ -22,8 +22,8 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "constants.hh"
 #include "accountmanager.hh"
+#include "constants.hh"
 #include "photoprovider.hh"
 
 int main(int argc, char *argv[])

@@ -35,7 +35,7 @@ class Contact : public QObject
     Q_PROPERTY(QString jid READ jid NOTIFY jidChanged)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString photo READ photo NOTIFY photoChanged)
-    Q_PROPERTY(Conversation * conversation READ conversation NOTIFY conversationChanged)
+    Q_PROPERTY(Conversation *conversation READ conversation NOTIFY conversationChanged)
 
 public:
     Contact(const QString &jid, Client *parent);

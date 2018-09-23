@@ -19,8 +19,8 @@
 
 #include <QUuid>
 
-#include "contact.hh"
 #include "client.hh"
+#include "contact.hh"
 #include "photoprovider.hh"
 
 Contact::Contact(const QString &jid, Client *parent) : QObject(parent), m_client(parent), m_jid(jid)
@@ -67,7 +67,8 @@ void Contact::photoFromData(const QByteArray &data)
         m_photo = QString();
     } else {
         QString newId = QUuid::createUuid().toString().replace("{", "").replace("}", "");
-        m_photo = PhotoProvider::imageUrl(newId);;
+        m_photo = PhotoProvider::imageUrl(newId);
+        ;
         PhotoProvider::instance()->addImage(newId, photo);
     }
     emit photoChanged();
