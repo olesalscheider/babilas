@@ -117,8 +117,7 @@ QString Client::clientType() const
 
 void Client::onConnected()
 {
-    //TODO use m_qxmppClient->clientPresence();
-    m_qxmppClient->clientPresence();
+    //TODO use m_qxmppClient.clientPresence();
     m_qxmppClient.vCardManager().requestClientVCard();
 
     auto serverDomain = m_qxmppClient.configuration().domain();

@@ -25,13 +25,13 @@ import org.kde.kirigami 2.4 as Kirigami
 
 Item {
     width: parent.width
-    height: 50 //childRect.contentHeight
+    height: 80 //childRect.contentHeight
     RowLayout {
-        height: 50 //childRect.contentHeight
+        height: 80 //childRect.contentHeight
         Image {
-            //image: root.visibleContact.photo
-            width: 64
-            height: 64
+            source: root.visibleContact.photo
+            width: 72
+            height: 72
             fillMode: Image.PreserveAspectFit
         }
         Text {

@@ -7,16 +7,17 @@ set (babilas_VERSION_MINOR 1)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 5.10 REQUIRED COMPONENTS DBus Gui Qml Widgets)
+find_package(Qt5 5.10 REQUIRED COMPONENTS DBus Gui Qml Quick Widgets)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(QXmpp 0.9.4 REQUIRED)
+find_package(QXmpp) # 0.9.4 REQUIRED) # TODO: Version
 find_package(KF5Kirigami2 REQUIRED) # TODO: Version
 
 add_subdirectory(translations)
 
 set(babilas_SOURCES
+    # C++ implementations
     src/account.hh
     src/account.cc
     src/accountmanager.cc
@@ -27,11 +28,13 @@ set(babilas_SOURCES
     src/contact.hh
     src/constants.cc
     src/constants.hh
-    src/contactlistmodel.cc
-    src/contactlistmodel.hh
     src/conversation.cc
     src/conversation.hh
+    src/photoprovider.cc
+    src/photoprovider.hh
+    # main source
     src/main.cc
+    # QRC files
     src/qml/qml.qrc
     img/img.qrc
 )
@@ -47,6 +50,7 @@ target_link_libraries(babilas
     Qt5::DBus
     Qt5::Gui
     Qt5::Qml
+    Qt5::Quick
     Qt5::Widgets
     KF5::Kirigami2
     QXmpp::QXmpp

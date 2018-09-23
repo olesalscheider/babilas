@@ -17,14 +17,16 @@
  * along with Babilas. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <QUuid>
+
 #include "contact.hh"
 #include "client.hh"
+#include "photoprovider.hh"
 
 Contact::Contact(const QString &jid, Client *parent) : QObject(parent), m_client(parent), m_jid(jid)
 {
     m_conversation = new Conversation(this);
     m_name = m_jid;
-    m_photo.load(":/images/default_contact_photo.png");
 }
 
 QString Contact::jid() const
@@ -47,15 +49,26 @@ void Contact::setName(const QString &name)
     emit nameChanged();
 }
 
-QImage Contact::photo() const
+QString Contact::photo() const
 {
+    if (m_photo.isEmpty()) {
+        return QStringLiteral("qrc:/images/default_contact_photo.png");
+    }
     return m_photo;
 }
 
 void Contact::photoFromData(const QByteArray &data)
 {
-    if (!m_photo.loadFromData(data)) {
-        m_photo.load(":/images/default_contact_photo.png");
+    if (!m_photo.isEmpty()) {
+        PhotoProvider::instance()->removeImage(m_photo);
+    }
+    QImage photo;
+    if (!photo.loadFromData(data)) {
+        m_photo = QString();
+    } else {
+        QString newId = QUuid::createUuid().toString().replace("{", "").replace("}", "");
+        m_photo = PhotoProvider::imageUrl(newId);;
+        PhotoProvider::instance()->addImage(newId, photo);
     }
     emit photoChanged();
 }

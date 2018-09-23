@@ -32,10 +32,10 @@ class Contact : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString jid READ jid)
+    Q_PROPERTY(QString jid READ jid NOTIFY jidChanged)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(QImage photo READ photo NOTIFY photoChanged)
-    Q_PROPERTY(Conversation *conversation READ conversation)
+    Q_PROPERTY(QString photo READ photo NOTIFY photoChanged)
+    Q_PROPERTY(Conversation * conversation READ conversation NOTIFY conversationChanged)
 
 public:
     Contact(const QString &jid, Client *parent);
@@ -44,7 +44,7 @@ public:
     QString name() const;
     void setName(const QString &name);
 
-    QImage photo() const;
+    QString photo() const;
     void photoFromData(const QByteArray &data);
 
     Conversation *conversation() const;
@@ -54,13 +54,14 @@ signals:
     void jidChanged();
     void nameChanged();
     void photoChanged();
+    void conversationChanged();
 
 private:
     Client *m_client;
     Conversation *m_conversation;
     QString m_jid;
     QString m_name;
-    QImage m_photo;
+    QString m_photo;
 };
 
 #endif // CONTACT_HH

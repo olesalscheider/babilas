@@ -23,8 +23,8 @@
 #include <QQmlContext>
 
 #include "constants.hh"
-
 #include "accountmanager.hh"
+#include "photoprovider.hh"
 
 int main(int argc, char *argv[])
 {
@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 
     AccountManager accountmanager;
     QQmlApplicationEngine engine;
+    engine.addImageProvider(PhotoProvider::prefix(), PhotoProvider::instance());
     auto context = engine.rootContext();
     context->setContextProperty("accountmanager", &accountmanager);
 
