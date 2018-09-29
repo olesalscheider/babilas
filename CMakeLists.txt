@@ -7,11 +7,11 @@ set (babilas_VERSION_MINOR 1)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 5.10 REQUIRED COMPONENTS DBus Gui Qml Quick Widgets)
+find_package(Qt5 5.11 REQUIRED COMPONENTS DBus Gui Qml Quick Widgets Xml)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(QXmpp) # 0.9.4 REQUIRED) # TODO: Version
+find_package(QXmpp 0.9.4 REQUIRED) # TODO: Version
 find_package(KF5Kirigami2 REQUIRED) # TODO: Version
 
 add_subdirectory(translations)

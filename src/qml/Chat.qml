@@ -17,7 +17,7 @@
  * along with Babilas. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.11
 import org.kde.kirigami 2.4 as Kirigami
 
 Kirigami.Page {
