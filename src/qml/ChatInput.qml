@@ -80,5 +80,7 @@ RowLayout {
         modal: true
         focus: true
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+        EmojiChooser { }
     }
 }
