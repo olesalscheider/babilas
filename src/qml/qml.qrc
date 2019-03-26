@@ -13,5 +13,6 @@
         <file>ContactList.qml</file>
         <file>EmojiChooser.qml</file>
         <file>emojis.xml</file>
+        <file>NoChatSelected.qml</file>
     </qresource>
 </RCC>

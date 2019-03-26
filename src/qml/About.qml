@@ -44,11 +44,11 @@ Dialog {
         ColumnLayout {
             spacing: 2
 
-            Text {
+            Label {
                 text: qsTr("Babilas is an XMPP client.")
             }
 
-            Text {
+            Label {
                 text: qsTr("Homepage: <a href=\"https://www.babilas.org\">https://www.babilas.org</a>")
                 onLinkActivated: Qt.openUrlExternally(link)
             }

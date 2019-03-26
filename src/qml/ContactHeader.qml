@@ -31,10 +31,10 @@ RowLayout {
         fillMode: Image.PreserveAspectFit
     }
     ColumnLayout {
-        Text {
+        Label {
             text: root.visibleContact.name
         }
-        Text {
+        Label {
             text: "<" + root.visibleContact.jid + ">"
         }
     }

@@ -35,6 +35,11 @@ Kirigami.ApplicationWindow {
 
     Chat {
         id: chat
+        visible: false
+    }
+
+    NoChatSelected {
+        id: noChatSelected
     }
 
     AccountList {
@@ -45,7 +50,14 @@ Kirigami.ApplicationWindow {
         id: about
     }
 
-    pageStack.initialPage: [contactList, chat]
+    pageStack.initialPage: [contactList, noChatSelected]
+    onVisibleContactChanged: {
+        if (noChatSelected.visible) {
+            noChatSelected.visible = false
+            pageStack.push(chat)
+            chat.visible = true
+        }
+    }
 
     menuBar: MenuBar {
         Menu {
